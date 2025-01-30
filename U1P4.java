@@ -1,11 +1,13 @@
-import java.io.*;
+import java.util.*;
 
 class U1P4 {
-    public static void main(String[] args) throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader("U1P4In.txt"));
+    public static void main(String[] args) {
 
-        String input;
-        while ((input = reader.readLine()) != null) {
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            String input = scanner.nextLine();
+            if (input.equals("let's get outta here"))
+                break;
 
             SimpleLinkedStack<Character> stack = new SimpleLinkedStack<>();
             for (char c : input.toCharArray()) {
@@ -24,6 +26,6 @@ class U1P4 {
 
         }
 
-        reader.close();
+        scanner.close();
     }
 }

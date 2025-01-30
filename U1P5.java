@@ -2,10 +2,17 @@ import java.util.*;
 
 class U1P5 {
     public static void main(String[] args) {
-        computeMe("7 4 5 + 6 - *");
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            String input = scanner.nextLine();
+            if (!computeMe(input)) {
+                break;
+            }
+        }
+        scanner.close();
     }
 
-    public static void computeMe(String input) {
+    public static boolean computeMe(String input) {
         SimpleLinkedStack<Integer> operands = new SimpleLinkedStack<Integer>();
 
         for (String str : input.split(" ")) {
@@ -40,7 +47,15 @@ class U1P5 {
             }
         }
 
-        // Okay we should have a length of 1
-        System.out.println(operands.pop());
+        if (operands.isEmpty())
+            return false;
+
+        int answer = operands.pop();
+        if (!operands.isEmpty()) {
+            return false;
+        }
+
+        System.out.println(answer);
+        return true;
     }
 }
