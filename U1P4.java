@@ -1,17 +1,11 @@
-import java.util.*;
+import java.io.*;
 
 class U1P4 {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+    public static void main(String[] args) throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader("U1P4In.txt"));
 
-        while (true) {
-            System.out.print("Enter a string: ");
-            String input = scanner.next();
-
-            // Or just ctrl + c to kill it
-            if (input.equals("exit")) {
-                break;
-            }
+        String input;
+        while ((input = reader.readLine()) != null) {
 
             SimpleLinkedStack<Character> stack = new SimpleLinkedStack<>();
             for (char c : input.toCharArray()) {
@@ -29,6 +23,7 @@ class U1P4 {
             System.out.println("");
 
         }
-        scanner.close();
+
+        reader.close();
     }
 }
