@@ -81,7 +81,6 @@ class TuringStacks {
     }
 
     public void printTransitions() {
-
         System.out.println("--Turing Stacks--");
 
         for (String key : transitions.keySet()) {
