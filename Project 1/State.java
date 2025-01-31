@@ -1,4 +1,0 @@
-enum State {
-    START,
-    BACK,
-}
