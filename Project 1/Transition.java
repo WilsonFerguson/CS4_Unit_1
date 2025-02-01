@@ -1,12 +1,12 @@
 class Transition {
     // I don't care about the current state, so:
-    State nextState;
+    String nextState;
     char currentChar;
     char newChar;
     Movement movement;
     boolean shouldEnd;
 
-    public Transition(State nextState, char currentChar, char newChar, Movement movement, boolean shouldEnd) {
+    public Transition(String nextState, char currentChar, char newChar, Movement movement, boolean shouldEnd) {
         this.nextState = nextState;
         this.currentChar = currentChar;
         this.newChar = newChar;

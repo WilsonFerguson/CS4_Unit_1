@@ -3,6 +3,7 @@ import java.io.*;
 
 class TuringStacks {
 
+    String currentTransitionName = "start";
     HashMap<String, ArrayList<Transition>> transitions;
 
     SimpleLinkedStack<Character> leftTape;
@@ -23,7 +24,7 @@ class TuringStacks {
             char nextChar = instructions[3].charAt(0);
 
             // Output state
-            State endtransition = getState(instructions[2]);
+            String endState = instructions[2];
 
             // Movement
             Movement movement = getMovement(instructions[4]);
@@ -31,7 +32,7 @@ class TuringStacks {
             // End program
             boolean shouldEnd = instructions[5].toLowerCase().charAt(0) == 't';
 
-            Transition transition = new Transition(endtransition, currentChar, nextChar, movement, shouldEnd);
+            Transition transition = new Transition(endState, currentChar, nextChar, movement, shouldEnd);
             ArrayList<Transition> transitionList = this.transitions.get(transitionName);
             if (transitionList == null) {
                 transitionList = new ArrayList<>();
@@ -47,17 +48,7 @@ class TuringStacks {
         for (char c : input.toCharArray()) {
             rightTape.push(c);
         }
-    }
-
-    public State getState(String input) {
-        switch (input.toLowerCase()) {
-            case "start":
-                return State.START;
-            case "back":
-                return State.BACK;
-            default:
-                return State.BACK;
-        }
+        currentTransitionName = "start";
     }
 
     public Movement getMovement(String input) {
@@ -75,13 +66,105 @@ class TuringStacks {
 
     /**
      * Performs one transition.
+     * 
+     * @return True if successful, False if it fails to run
      */
-    public void step() {
+    public boolean step() {
+        ArrayList<Transition> transitionList = transitions.get(currentTransitionName);
+        if (transitionList == null) {
+            System.out.println("No transition list found for \"" + currentTransitionName + "\"");
+            return false;
+        }
 
+        // TODO: For current char, don't always check right but check left if we are
+        // moving left.
+        char currentChar;
+        if (rightTape.isEmpty()) {
+            currentChar = ' ';
+        } else {
+            currentChar = rightTape.pop();
+        }
+        for (Transition transition : transitionList) {
+            if (transition.currentChar != currentChar)
+                continue;
+
+            currentChar = transition.newChar;
+            currentTransitionName = transition.nextState;
+            switch (transition.movement) {
+                case LEFT:
+                    // Put it back
+                    rightTape.push(currentChar);
+                    // Move over
+                    if (leftTape.isEmpty()) {
+                        rightTape.push(' ');
+                    } else {
+                        rightTape.push(leftTape.pop());
+                    }
+                    break;
+                case RIGHT:
+                    // Move over
+                    leftTape.push(currentChar);
+                    break;
+                case STAY:
+                    // Put it back
+                    rightTape.push(currentChar);
+                    break;
+            }
+
+            if (transition.shouldEnd) {
+                return false;
+            }
+
+            return true;
+        }
+
+        System.out.println(
+                "No transition found for \"" + currentChar + "\" in transition list \"" + currentTransitionName + "\"");
+        return false;
+    }
+
+    public void run() {
+        while (true) {
+            boolean result = step();
+            if (!result) {
+                printTape();
+                System.out.println();
+                System.out.println("Okay cya");
+                return;
+            }
+        }
+    }
+
+    public void printTape() {
+        printLeftTape();
+        printRightTape();
+    }
+
+    public void printLeftTape() {
+        ArrayList<Character> left = new ArrayList<>();
+        while (!leftTape.isEmpty()) {
+            left.add(leftTape.pop());
+        }
+
+        for (int i = left.size() - 1; i >= 0; i--) {
+            System.out.print(left.get(i));
+            leftTape.push(left.get(i));
+        }
+    }
+
+    public void printRightTape() {
+        ArrayList<Character> right = new ArrayList<>();
+        while (!rightTape.isEmpty()) {
+            right.add(rightTape.pop());
+        }
+
+        for (int i = right.size() - 1; i >= 0; i--) {
+            System.out.print(right.get(i));
+            rightTape.push(right.get(i));
+        }
     }
 
     public void printTransitions() {
-
         System.out.println("--Turing Stacks--");
 
         for (String key : transitions.keySet()) {
@@ -119,5 +202,14 @@ class TuringStacks {
 
         TuringStacks turingStacks = new TuringStacks(input);
         turingStacks.printTransitions();
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Input string: ");
+        String inputString = scanner.nextLine();
+
+        turingStacks.setInput(inputString);
+        scanner.close();
+
+        turingStacks.run();
     }
 }
