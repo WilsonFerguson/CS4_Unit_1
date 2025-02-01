@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 class SimpleLinkedQueue<T> implements SimpleQueue<T> {
     private static class LinkedGuy<E> {
         public E value;
@@ -90,6 +88,12 @@ class SimpleLinkedQueue<T> implements SimpleQueue<T> {
         System.out.println("Peeked element: " + peeked);
 
         // print the guy out
+        System.out.println("Queue: " + queue);
+
+        // clear the guy
+        queue.clear();
+
+        // let's print him again
         System.out.println("Queue: " + queue);
     }
 }
