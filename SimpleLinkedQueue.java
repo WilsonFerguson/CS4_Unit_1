@@ -59,9 +59,9 @@ class SimpleLinkedQueue<T> implements SimpleQueue<T> {
     }
 
     public static void main(String[] args) {
-        // This whole thing is stolen from geeksforgeeks
-        // This whole thing is stolen from geeksforgeeks
-        // This whole thing is stolen from geeksforgeeks
+        // This whole thing is stolen from geeksforgeeks (except for the very end)
+        // This whole thing is stolen from geeksforgeeks (except for the very end)
+        // This whole thing is stolen from geeksforgeeks (except for the very end)
 
         SimpleLinkedQueue<String> queue = new SimpleLinkedQueue<>();
 
@@ -95,5 +95,8 @@ class SimpleLinkedQueue<T> implements SimpleQueue<T> {
 
         // let's print him again
         System.out.println("Queue: " + queue);
+
+        // we empty?
+        System.out.println("Empty? " + queue.isEmpty());
     }
 }
