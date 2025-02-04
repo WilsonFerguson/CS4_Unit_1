@@ -10,6 +10,7 @@ class SimpleLinkedQueue<T> implements SimpleQueue<T> {
     }
 
     LinkedGuy<T> top;
+    LinkedGuy<T> bottom;
 
     @Override
     public boolean isEmpty() {
@@ -23,17 +24,25 @@ class SimpleLinkedQueue<T> implements SimpleQueue<T> {
 
     @Override
     public void push(T e) {
+        // if (top == null) {
+        // top = new LinkedGuy<T>(e, null);
+        // return;
+        // }
+        //
+        // LinkedGuy<T> wereDivingIn = top;
+        // while (wereDivingIn.next != null) {
+        // wereDivingIn = wereDivingIn.next;
+        // }
+        //
+        // wereDivingIn.next = new LinkedGuy<T>(e, null);
         if (top == null) {
             top = new LinkedGuy<T>(e, null);
+            bottom = top;
             return;
         }
 
-        LinkedGuy<T> wereDivingIn = top;
-        while (wereDivingIn.next != null) {
-            wereDivingIn = wereDivingIn.next;
-        }
-
-        wereDivingIn.next = new LinkedGuy<T>(e, null);
+        bottom.next = new LinkedGuy<T>(e, null);
+        bottom = bottom.next;
     }
 
     @Override
