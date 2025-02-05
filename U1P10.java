@@ -6,44 +6,31 @@ class U1P10 {
         int indexFront;
         int indexLast;
 
-        boolean first;
-
         public MyCircularQueue(int k) {
             capacity = k;
             array = new int[k];
+            for (int i = 0; i < k; i++) {
+                array[i] = -1;
+            }
             indexFront = 0;
             indexLast = 0;
-
-            first = true;
         }
 
         public boolean enQueue(int value) {
-            if (first) {
-                array[indexLast] = value;
-                first = false;
-                return true;
-            }
-            if ((indexLast + 1) % capacity == indexFront) {
+            if (isFull())
                 return false;
-            }
-            indexLast++;
-            indexLast %= capacity;
 
             array[indexLast] = value;
+            indexLast = (indexLast + 1) % capacity;
             return true;
         }
 
         public boolean deQueue() {
-            // If we move the front one to the right and we are past last, then we are size
-            // = 0
-            if ((indexFront + 1) % capacity > indexLast) {
+            if (isEmpty())
                 return false;
-            }
 
-            int value = array[indexFront]; // I guess it doesn't want this
-            indexFront++;
-            indexFront %= capacity;
-
+            array[indexFront] = -1;
+            indexFront = (indexFront + 1) % capacity;
             return true;
         }
 
@@ -52,28 +39,19 @@ class U1P10 {
         }
 
         public int Rear() {
-            return array[indexLast];
+            if (indexLast == 0)
+                return array[capacity - 1];
+            return array[indexLast - 1];
         }
 
         public boolean isEmpty() {
-            return indexLast == indexFront + 1;
+            return indexFront == indexLast && array[indexFront] == -1;
         }
 
         public boolean isFull() {
-            return indexFront == indexLast + 1;
+            return indexFront == indexLast && array[indexFront] != -1;
         }
     }
-
-    /**
-     * Your MyCircularQueue object will be instantiated and called as such:
-     * MyCircularQueue obj = new MyCircularQueue(k);
-     * boolean param_1 = obj.enQueue(value);
-     * boolean param_2 = obj.deQueue();
-     * int param_3 = obj.Front();
-     * int param_4 = obj.Rear();
-     * boolean param_5 = obj.isEmpty();
-     * boolean param_6 = obj.isFull();
-     */
 
     public static void main(String[] args) {
 
