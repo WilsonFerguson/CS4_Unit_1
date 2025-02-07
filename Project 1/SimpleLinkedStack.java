@@ -2,15 +2,19 @@ public class SimpleLinkedStack<E> implements SimpleStack<E> {
     private static class LinkedElement<E> {
         public E e;
         public LinkedElement<E> next;
+
         public LinkedElement(E e, LinkedElement<E> next) {
             this.e = e;
             this.next = next;
         }
     }
+
     private LinkedElement<E> top;
+
     public SimpleLinkedStack() { // equivalent to default
         top = null;
     }
+
     @Override
     public boolean isEmpty() {
         return top == null;
@@ -64,5 +68,5 @@ public class SimpleLinkedStack<E> implements SimpleStack<E> {
             System.out.println("Test failed.  Expected: " + expected + ", actual " + out);
         }
     }
-    
+
 }

@@ -29,10 +29,7 @@ class TuringStacks {
             // Movement
             Movement movement = getMovement(instructions[4]);
 
-            // End program
-            boolean shouldEnd = instructions[5].toLowerCase().charAt(0) == 't';
-
-            Transition transition = new Transition(endState, currentChar, nextChar, movement, shouldEnd);
+            Transition transition = new Transition(endState, currentChar, nextChar, movement);
             ArrayList<Transition> transitionList = this.transitions.get(transitionName);
             if (transitionList == null) {
                 transitionList = new ArrayList<>();
@@ -71,55 +68,52 @@ class TuringStacks {
      */
     public boolean step() {
         ArrayList<Transition> transitionList = transitions.get(currentTransitionName);
+        // Then we done
         if (transitionList == null) {
-            System.out.println("No transition list found for \"" + currentTransitionName + "\"");
             return false;
         }
 
-        // TODO: For current char, don't always check right but check left if we are
-        // moving left.
         char currentChar;
         if (rightTape.isEmpty()) {
             currentChar = ' ';
         } else {
-            currentChar = rightTape.pop();
+            currentChar = rightTape.peek();
         }
+
         for (Transition transition : transitionList) {
             if (transition.currentChar != currentChar)
                 continue;
 
-            currentChar = transition.newChar;
+            char newChar = transition.newChar;
             currentTransitionName = transition.nextState;
+
             switch (transition.movement) {
-                case LEFT:
-                    // Put it back
-                    rightTape.push(currentChar);
-                    // Move over
-                    if (leftTape.isEmpty()) {
-                        rightTape.push(' ');
-                    } else {
-                        rightTape.push(leftTape.pop());
-                    }
+                case STAY:
+                    rightTape.pop();
+                    rightTape.push(newChar);
                     break;
                 case RIGHT:
-                    // Move over
-                    leftTape.push(currentChar);
+                    if (!rightTape.isEmpty()) {
+                        rightTape.pop();
+                    }
+                    leftTape.push(newChar);
                     break;
-                case STAY:
-                    // Put it back
-                    rightTape.push(currentChar);
+                case LEFT:
+                    if (!rightTape.isEmpty()) {
+                        rightTape.pop();
+                    }
+                    rightTape.push(newChar);
+                    if (!leftTape.isEmpty()) {
+                        rightTape.push(leftTape.pop());
+                    } else {
+                        rightTape.push(' ');
+                    }
                     break;
-            }
-
-            if (transition.shouldEnd) {
-                return false;
             }
 
             return true;
         }
 
-        System.out.println(
-                "No transition found for \"" + currentChar + "\" in transition list \"" + currentTransitionName + "\"");
         return false;
     }
 
@@ -143,8 +137,13 @@ class TuringStacks {
     public void printLeftTape() {
         ArrayList<Character> left = new ArrayList<>();
         while (!leftTape.isEmpty()) {
-            left.add(leftTape.pop());
+            char c = leftTape.pop();
+            if (c == ' ') {
+                continue;
+            }
+            left.add(c);
         }
+        System.out.println("Left size: " + left.size());
 
         for (int i = left.size() - 1; i >= 0; i--) {
             System.out.print(left.get(i));
@@ -155,7 +154,11 @@ class TuringStacks {
     public void printRightTape() {
         ArrayList<Character> right = new ArrayList<>();
         while (!rightTape.isEmpty()) {
-            right.add(rightTape.pop());
+            char c = rightTape.pop();
+            if (c == ' ') {
+                continue;
+            }
+            right.add(c);
         }
 
         for (int i = right.size() - 1; i >= 0; i--) {
@@ -181,7 +184,10 @@ class TuringStacks {
     }
 
     public static void main(String[] args) {
-        String path = "ChangeZerosToOnes.txt";
+        Scanner inputScanner = new Scanner(System.in);
+        System.out.println("What file: ");
+        String path = inputScanner.nextLine();
+        // String path = "ChangeZerosToOnes.txt";
         String[] input;
         try {
             Scanner scanner = new Scanner(new File(path));
@@ -197,18 +203,17 @@ class TuringStacks {
             }
         } catch (FileNotFoundException e) {
             System.out.println("Yeah that file doesn't exist");
+            inputScanner.close();
             return;
         }
 
         TuringStacks turingStacks = new TuringStacks(input);
-        turingStacks.printTransitions();
 
-        Scanner scanner = new Scanner(System.in);
         System.out.print("Input string: ");
-        String inputString = scanner.nextLine();
+        String inputString = inputScanner.nextLine();
 
         turingStacks.setInput(inputString);
-        scanner.close();
+        inputScanner.close();
 
         turingStacks.run();
     }

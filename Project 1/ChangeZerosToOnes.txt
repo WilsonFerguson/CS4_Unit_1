@@ -1,4 +1,4 @@
-start,0,start,1,R,F
-start, ,back, ,L,F
-back,1,back,1,L,F
-back, ,back, ,R,T
+start,0,start,1,R
+start, ,back, ,L
+back,1,back,1,L
+back, ,stop, ,R

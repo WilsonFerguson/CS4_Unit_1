@@ -4,14 +4,12 @@ class Transition {
     char currentChar;
     char newChar;
     Movement movement;
-    boolean shouldEnd;
 
-    public Transition(String nextState, char currentChar, char newChar, Movement movement, boolean shouldEnd) {
+    public Transition(String nextState, char currentChar, char newChar, Movement movement) {
         this.nextState = nextState;
         this.currentChar = currentChar;
         this.newChar = newChar;
         this.movement = movement;
-        this.shouldEnd = shouldEnd;
     }
 
     @Override
@@ -21,7 +19,6 @@ class Transition {
         output += ", current char: " + currentChar;
         output += ", new char: " + newChar;
         output += ", movement: " + movement;
-        output += ", should end: " + shouldEnd;
         return output;
     }
 }
