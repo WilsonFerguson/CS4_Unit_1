@@ -1,5 +1,8 @@
-Idea:
-go to the right and every time you get a 0, add a 1 next or something
-Now we are at the end, go back and convert all 1's to 0s.
-
-Something along those lines, though not exactly because we cannot override
+start,0,start,0,R
+start, ,findguy, ,L
+findguy,0,movehim,A,R
+finguy,A,findguy,A,L
+movehim,0,movehim,0,R
+movehim,A,movehim,A,R
+movehim, ,findguy,0,L
+findguy, ,done, ,R

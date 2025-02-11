@@ -2,6 +2,7 @@ start,0,start,0,R
 start,1,start,1,R
 start, ,left, ,L
 left,0,wegoback,1,L
+left, ,wedone,1,R
 left,1,left,0,L
 wegoback,0,wegoback,0,L
 wegoback,1,wegoback,1,L

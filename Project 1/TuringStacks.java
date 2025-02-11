@@ -42,8 +42,8 @@ class TuringStacks {
     }
 
     public void setInput(String input) {
-        for (char c : input.toCharArray()) {
-            rightTape.push(c);
+        for (int i = input.length() - 1; i >= 0; i--) {
+            rightTape.push(input.toCharArray()[i]);
         }
         currentTransitionName = "start";
     }
@@ -64,7 +64,7 @@ class TuringStacks {
     /**
      * Performs one transition.
      * 
-     * @return True if successful, False if it fails to run
+     * @return True if successful, False if it doesn't find a valid transition
      */
     public boolean step() {
         ArrayList<Transition> transitionList = transitions.get(currentTransitionName);
@@ -73,12 +73,7 @@ class TuringStacks {
             return false;
         }
 
-        char currentChar;
-        if (rightTape.isEmpty()) {
-            currentChar = ' ';
-        } else {
-            currentChar = rightTape.peek();
-        }
+        char currentChar = rightTape.pop();
 
         for (Transition transition : transitionList) {
             if (transition.currentChar != currentChar)
@@ -89,24 +84,21 @@ class TuringStacks {
 
             switch (transition.movement) {
                 case STAY:
-                    rightTape.pop();
                     rightTape.push(newChar);
                     break;
                 case RIGHT:
-                    if (!rightTape.isEmpty()) {
-                        rightTape.pop();
-                    }
                     leftTape.push(newChar);
+                    if (rightTape.isEmpty()) {
+                        rightTape.push(' ');
+                    }
                     break;
                 case LEFT:
-                    if (!rightTape.isEmpty()) {
-                        rightTape.pop();
-                    }
                     rightTape.push(newChar);
-                    if (!leftTape.isEmpty()) {
-                        rightTape.push(leftTape.pop());
-                    } else {
-                        rightTape.push(' ');
+
+                    rightTape.push(leftTape.pop());
+
+                    if (leftTape.isEmpty()) {
+                        leftTape.push(' ');
                     }
                     break;
             }
@@ -119,6 +111,7 @@ class TuringStacks {
 
     public void run() {
         while (true) {
+            printTapeWithCursor();
             boolean result = step();
             if (!result) {
                 printTape();
@@ -138,12 +131,10 @@ class TuringStacks {
         ArrayList<Character> left = new ArrayList<>();
         while (!leftTape.isEmpty()) {
             char c = leftTape.pop();
-            if (c == ' ') {
-                continue;
-            }
+            if (c == ' ')
+                break;
             left.add(c);
         }
-        System.out.println("Left size: " + left.size());
 
         for (int i = left.size() - 1; i >= 0; i--) {
             System.out.print(left.get(i));
@@ -155,16 +146,43 @@ class TuringStacks {
         ArrayList<Character> right = new ArrayList<>();
         while (!rightTape.isEmpty()) {
             char c = rightTape.pop();
-            if (c == ' ') {
-                continue;
-            }
             right.add(c);
         }
 
-        for (int i = right.size() - 1; i >= 0; i--) {
+        for (int i = 0; i < right.size(); i++) {
             System.out.print(right.get(i));
+        }
+        for (int i = right.size() - 1; i >= 0; i--) {
             rightTape.push(right.get(i));
         }
+    }
+
+    public void printTapeWithCursor() {
+        ArrayList<Character> left = new ArrayList<>();
+        while (!leftTape.isEmpty()) {
+            char c = leftTape.pop();
+            left.add(c);
+        }
+
+        for (int i = left.size() - 1; i >= 0; i--) {
+            System.out.print(left.get(i));
+            leftTape.push(left.get(i));
+        }
+
+        ArrayList<Character> right = new ArrayList<>();
+        while (!rightTape.isEmpty()) {
+            char c = rightTape.pop();
+            right.add(c);
+        }
+
+        for (int i = 0; i < right.size(); i++) {
+            System.out.print(right.get(i));
+        }
+        for (int i = right.size() - 1; i >= 0; i--) {
+            rightTape.push(right.get(i));
+        }
+        System.out.println();
+        System.out.println(" ".repeat(left.size()) + "^");
     }
 
     public void printTransitions() {
