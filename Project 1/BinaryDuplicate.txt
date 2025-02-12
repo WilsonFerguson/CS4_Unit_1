@@ -1,0 +1,32 @@
+start,0,search,0,N
+start,1,search,1,N
+
+search,A,search,A,R
+search,B,search,B,R
+search,0,move0,A,R
+search,1,move1,B,R
+search, ,fullleftdone, ,L
+
+move0,0,move0,0,R
+move0,1,move0,1,R
+move0,A,move0,A,R
+move0,B,move0,B,R
+move0, ,fullleft,A,L
+
+move1,0,move1,0,R
+move1,1,move1,1,R
+move1,A,move1,A,R
+move1,B,move1,B,R
+move1, ,fullleft,B,L
+
+fullleft,0,fullleft,0,L
+fullleft,1,fullleft,1,L
+fullleft,A,fullleft,A,L
+fullleft,B,fullleft,B,L
+fullleft, ,search, ,R
+
+fullleftdone,0,fullleftdone,0,L
+fullleftdone,1,fullleftdone,1,L
+fullleftdone,A,fullleftdone,0,L
+fullleftdone,B,fullleftdone,1,L
+fullleftdone, ,done, ,R

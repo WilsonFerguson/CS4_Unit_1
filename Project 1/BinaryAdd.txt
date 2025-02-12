@@ -1,0 +1,57 @@
+start,0,GoToEnd,0,R
+start,1,GoToEnd,1,R
+
+GoToEnd,0,GoToEnd,0,R
+GoToEnd,1,GoToEnd,1,R
+GoToEnd,A,GoToEnd,A,R
+GoToEnd,B,GoToEnd,B,R
+GoToEnd,+,GoToEndAfterPlus,+,R
+GoToEnd, ,search, ,L
+
+GoToEndAfterPlus,0,GoToEndAfterPlus,0,R
+GoToEndAfterPlus,1,GoToEndAfterPlus,1,R
+GoToEndAfterPlus, ,search, ,L
+GoToEndAfterPlus,A,search,A,L
+GoToEndAfterPlus,B,search,B,L
+
+search,A,search,A,L
+search,B,search,B,L
+search,0,findPlus0,A,L
+search,1,findPlus1,B,L
+search,+,tidyUpPart1,+,R
+
+findPlus0,0,findPlus0,0,L
+findPlus0,1,findPlus0,1,L
+findPlus0,+,add0,+,L
+
+findPlus1,0,findPlus1,0,L
+findPlus1,1,findPlus1,1,L
+findPlus1,+,add1,+,L
+
+add0,A,add0,A,L
+add0,B,add0,B,L
+add0,0,GoToEnd,A,N
+add0,1,GoToEnd,B,N
+
+add1,A,add1,A,L
+add1,B,add1,B,L
+add1,0,GoToEnd,B,N
+add1,1,add1Part2,A,L
+
+add1Part2,0,GoToEnd,1,N
+add1Part2,1,add1Part2,0,L
+add1Part2, ,GoToEnd,1,N
+
+tidyUpPart1,A,tidyUpPart1,A,R
+tidyUpPart1,B,tidyUpPart1,B,R
+tidyUpPart1, ,tidyUpPart2, ,L
+
+tidyUpPart2,A,tidyUpPart2, ,L
+tidyUpPart2,B,tidyUpPart2, ,L
+tidyUpPart2,+,GoToStart, ,L
+
+GoToStart,0,GoToStart,0,L
+GoToStart,1,GoToStart,1,L
+GoToStart,A,GoToStart,0,L
+GoToStart,B,GoToStart,1,L
+GoToStart, ,done, ,R

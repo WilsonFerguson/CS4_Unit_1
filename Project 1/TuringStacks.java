@@ -180,7 +180,7 @@ class TuringStacks {
         for (int i = right.size() - 1; i >= 0; i--) {
             rightTape.push(right.get(i));
         }
-        System.out.println();
+        System.out.println(" (" + currentTransitionName + ")");
         System.out.println(" ".repeat(left.size()) + "^");
     }
 
@@ -203,17 +203,18 @@ class TuringStacks {
     public static void main(String[] args) {
         Scanner inputScanner = new Scanner(System.in);
 
-        // System.out.println("What file: ");
-        // String path = inputScanner.nextLine();
-        String path = "UnaryDuplicate.txt";
-        // String path = "ChangeZerosToOnes.txt";
+        System.out.println("What file: ");
+        String path = inputScanner.nextLine();
         String[] input;
 
         try {
             Scanner scanner = new Scanner(new File(path));
             ArrayList<String> inputList = new ArrayList<>();
             while (scanner.hasNextLine()) {
-                inputList.add(scanner.nextLine());
+                String line = scanner.nextLine();
+                if (line.length() == 0)
+                    continue;
+                inputList.add(line);
             }
             scanner.close();
 
