@@ -111,7 +111,6 @@ class TuringStacks {
 
     public void run() {
         while (true) {
-            printTapeWithCursor();
             boolean result = step();
             if (!result) {
                 printTape();
@@ -203,10 +202,13 @@ class TuringStacks {
 
     public static void main(String[] args) {
         Scanner inputScanner = new Scanner(System.in);
-        System.out.println("What file: ");
-        String path = inputScanner.nextLine();
+
+        // System.out.println("What file: ");
+        // String path = inputScanner.nextLine();
+        String path = "UnaryDuplicate.txt";
         // String path = "ChangeZerosToOnes.txt";
         String[] input;
+
         try {
             Scanner scanner = new Scanner(new File(path));
             ArrayList<String> inputList = new ArrayList<>();

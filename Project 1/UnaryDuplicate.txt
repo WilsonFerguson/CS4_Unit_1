@@ -1,8 +1,34 @@
-start,0,start,0,R
-start, ,findguy, ,L
+start,0,startzero,0,R
+startzero,0,startzero,0,R
+startzero, ,findguy, ,L
 findguy,0,movehim,A,R
-finguy,A,findguy,A,L
+findguy,A,findguy,A,L
+findguy,B,findguy,B,L
 movehim,0,movehim,0,R
 movehim,A,movehim,A,R
-movehim, ,findguy,0,L
-findguy, ,done, ,R
+movehim,B,movehim,B,R
+movehim, ,findguy,B,L
+findguy, ,finishinguppart1, ,R
+finishinguppart1,A,finishinguppart1,0,R
+finishinguppart1,0,finishinguppart1,0,R
+finishinguppart1,B,finishinguppart1,0,R
+finishinguppart1, ,finishinguppart2, ,L
+finishinguppart2,0,finishinguppart2,0,L
+finishinguppart2, ,done, ,R
+start,1,startone,1,R
+startone,1,startone,1,R
+startone, ,findguy1, ,L
+findguy1,1,movehim1,C,R
+findguy1,C,findguy1,C,L
+findguy1,D,findguy1,D,L
+movehim1,1,movehim1,1,R
+movehim1,C,movehim1,C,R
+movehim1,D,movehim1,D,R
+movehim1, ,findguy1,D,L
+findguy1, ,finishinguppart11, ,R
+finishinguppart11,C,finishinguppart11,1,R
+finishinguppart11,1,finishinguppart11,1,R
+finishinguppart11,D,finishinguppart11,1,R
+finishinguppart11, ,finishinguppart21, ,L
+finishinguppart21,1,finishinguppart21,1,L
+finishinguppart21, ,done, ,R
