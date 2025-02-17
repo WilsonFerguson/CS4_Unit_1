@@ -42,9 +42,14 @@ class TuringStacks {
     }
 
     public void setInput(String input) {
-        for (int i = input.length() - 1; i >= 0; i--) {
-            rightTape.push(input.toCharArray()[i]);
+        if (input.length() == 0) {
+            rightTape.push(' ');
+        } else {
+            for (int i = input.length() - 1; i >= 0; i--) {
+                rightTape.push(input.toCharArray()[i]);
+            }
         }
+
         currentTransitionName = "start";
     }
 
@@ -95,6 +100,9 @@ class TuringStacks {
                 case LEFT:
                     rightTape.push(newChar);
 
+                    if (leftTape.isEmpty()) {
+                        leftTape.push(' ');
+                    }
                     rightTape.push(leftTape.pop());
 
                     if (leftTape.isEmpty()) {
@@ -106,6 +114,7 @@ class TuringStacks {
             return true;
         }
 
+        rightTape.push(currentChar);
         return false;
     }
 

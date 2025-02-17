@@ -32,11 +32,13 @@ add0,A,add0,A,L
 add0,B,add0,B,L
 add0,0,GoToEnd,A,N
 add0,1,GoToEnd,B,N
+add0, ,GoToEnd, ,R
 
 add1,A,add1,A,L
 add1,B,add1,B,L
 add1,0,GoToEnd,B,N
 add1,1,add1Part2,A,L
+add1, ,GoToEnd,B,N
 
 add1Part2,0,GoToEnd,1,N
 add1Part2,1,add1Part2,0,L
